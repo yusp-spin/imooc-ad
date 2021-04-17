@@ -1,8 +1,8 @@
 package com.imooc.ad.service;
 
 import com.imooc.ad.exception.AdException;
-import com.imooc.ad.request.CreateUserRequest;
-import com.imooc.ad.response.CreateUserResponse;
+import com.imooc.ad.request.AdCreateUserRequest;
+import com.imooc.ad.response.AdCreateUserResponse;
 
 /**
  * @author spin
@@ -16,5 +16,5 @@ public interface IUserService {
     * @author yusp
     * @date 2021/4/16 14:00
     */
-    CreateUserResponse createUser(CreateUserRequest request) throws AdException;
+    AdCreateUserResponse createUser(AdCreateUserRequest request) throws AdException;
 }

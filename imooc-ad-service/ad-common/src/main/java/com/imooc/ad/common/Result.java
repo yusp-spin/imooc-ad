@@ -1,4 +1,4 @@
-package com.imooc.ad.vo;
+package com.imooc.ad.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,12 +14,12 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommonResponse<T> implements Serializable {
+public class Result<T> implements Serializable {
     private Integer code;
     private String message;
     private T data;
 
-    public CommonResponse(Integer code, String message) {
+    public Result(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

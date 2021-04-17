@@ -2,6 +2,7 @@ package com.imooc.ad.dao;
 
 import com.imooc.ad.entity.AdPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface AdPlanRepository extends JpaRepository<AdPlan,Long> {
  　　* @author yusp
  　　* @date 2021/4/16 13:24
  　　*/
-    AdPlan findByUserIdAnAndPlanName(Long userId, String planName);
+    AdPlan findByUserIdAndPlanName(Long userId, String planName);
 
      /**
  　　* @description: TODO 根据推广计划状态查询推广计划组

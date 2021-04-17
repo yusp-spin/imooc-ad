@@ -1,5 +1,7 @@
 package com.imooc.ad.request;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +15,11 @@ import org.springframework.util.StringUtils;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserRequest {
 
+@ApiModel(value = "AdCreateUserRequest", description = "用户相关请求接口")
+public class AdCreateUserRequest {
+
+    @ApiModelProperty(name = "userName", value = "用户名", example = "xiaofang")
     private String userName;
 
     /**

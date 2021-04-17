@@ -12,7 +12,7 @@ import com.imooc.ad.request.AdPlanRequest;
 import com.imooc.ad.response.AdPlanResponse;
 import com.imooc.ad.service.IAdPlanService;
 import com.imooc.ad.utils.CommonUtils;
-import com.netflix.discovery.converters.Auto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +26,7 @@ import java.util.Optional;
  * @date 2021/4/1615:04
  * @description: TODO
  */
+@Slf4j
 @Service
 public class AdPlanServiceImpl implements IAdPlanService {
 
@@ -51,7 +52,7 @@ public class AdPlanServiceImpl implements IAdPlanService {
         if(!adUser.isPresent()) {
             throw new AdException(Constants.ErrorMsg.CAN_NOT_FIND_RECORD);
         }
-        AdPlan oldPlan = adPlanRepository.findByUserIdAnAndPlanName(request.getUserId(), request.getPlanName());
+        AdPlan oldPlan = adPlanRepository.findByUserIdAndPlanName(request.getUserId(), request.getPlanName());
         if(oldPlan != null) {
             throw new AdException(Constants.ErrorMsg.SAME_NAME_PLAN_ERROR);
         }

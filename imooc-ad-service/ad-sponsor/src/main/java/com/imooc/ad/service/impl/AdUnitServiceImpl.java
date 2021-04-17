@@ -7,17 +7,14 @@ import com.imooc.ad.entity.AdUnit;
 import com.imooc.ad.entity.unit_condition.AdUnitDistrict;
 import com.imooc.ad.entity.unit_condition.AdUnitIt;
 import com.imooc.ad.entity.unit_condition.AdUnitKeyword;
+import com.imooc.ad.entity.unit_condition.CreativeUnit;
 import com.imooc.ad.exception.AdException;
-import com.imooc.ad.request.AdUnitDistrictRequest;
-import com.imooc.ad.request.AdUnitItRequest;
-import com.imooc.ad.request.AdUnitKeywordRequest;
-import com.imooc.ad.request.AdUnitRequest;
-import com.imooc.ad.response.AdUnitDistrictResponse;
-import com.imooc.ad.response.AdUnitItResponse;
-import com.imooc.ad.response.AdUnitKeywordResponse;
-import com.imooc.ad.response.AdUnitResponse;
+import com.imooc.ad.request.*;
+import com.imooc.ad.response.*;
 import com.imooc.ad.service.IAdUnitService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -28,6 +25,8 @@ import java.util.stream.Collectors;
  * @date 2021/4/1616:04
  * @description: TODO
  */
+@Slf4j
+@Service
 public class AdUnitServiceImpl implements IAdUnitService {
 
     @Autowired
@@ -44,6 +43,9 @@ public class AdUnitServiceImpl implements IAdUnitService {
 
     @Autowired
     private AdUnitDistrictRepository adUnitDistrictRepository;
+
+    @Autowired
+    private CreativeUnitRepository creativeUnitRepository;
 
 
 
@@ -143,11 +145,49 @@ public class AdUnitServiceImpl implements IAdUnitService {
         return null;
     }
 
+
+    @Override
+    public CreativeUnitResponse createAdCreatveUnit(CreativeUnitRequest request) throws AdException {
+        List<CreativeUnitRequest.CreativeUnitItem> unitItems = request.getUnitItems();
+        List<Long> unitIds  = unitItems.stream().map(CreativeUnitRequest.CreativeUnitItem::getUnitId).collect(Collectors.toList());
+        List<Long> creativeIds = unitItems.stream().map(CreativeUnitRequest.CreativeUnitItem::getCreativeId).collect(Collectors.toList());
+        if(isRelatedUnitExist(unitIds) || isRelatedCreativeUnit(creativeIds)) {
+            throw new AdException(Constants.ErrorMsg.REQUEST_PARAM_ERROR);
+        }
+        List<CreativeUnit> creativeUnits = new ArrayList<>();
+        unitItems.stream()
+                .forEach(u -> {
+                    creativeUnits.add(new CreativeUnit(u.getCreativeId(),u.getUnitId()));
+                });
+        List<Long> ids = creativeUnitRepository.saveAll(creativeUnits).stream()
+                .map(CreativeUnit::getId).collect(Collectors.toList());
+        return new CreativeUnitResponse(ids);
+    }
+
+
+    /**
+    * @description: TODO 对输入的unitID进行校验
+    * @author yusp
+    * @date 2021/4/16 20:40
+    */
     private boolean isRelatedUnitExist(List<Long> unitIds) {
         if(CollectionUtils.isEmpty(unitIds)) {
             return false;
         }
         //查询ids是否都存在
         return adUnitRepository.findAllById(unitIds).size() == new HashSet<>(unitIds).size();
+    }
+
+    /**
+     * @description: TODO 对输入的creativeID进行校验
+     * @author yusp
+     * @date 2021/4/16 20:40
+     */
+    private boolean isRelatedCreativeUnit(List<Long> creativeIdS) {
+        if(CollectionUtils.isEmpty(creativeIdS)) {
+            return false;
+        }
+        //查询ids是否都存在
+        return creativeUnitRepository.findAllById(creativeIdS).size() == new HashSet<>(creativeIdS).size();
     }
 }

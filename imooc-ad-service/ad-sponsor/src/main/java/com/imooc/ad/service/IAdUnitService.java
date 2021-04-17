@@ -1,14 +1,8 @@
 package com.imooc.ad.service;
 
 import com.imooc.ad.exception.AdException;
-import com.imooc.ad.request.AdUnitDistrictRequest;
-import com.imooc.ad.request.AdUnitItRequest;
-import com.imooc.ad.request.AdUnitKeywordRequest;
-import com.imooc.ad.request.AdUnitRequest;
-import com.imooc.ad.response.AdUnitDistrictResponse;
-import com.imooc.ad.response.AdUnitItResponse;
-import com.imooc.ad.response.AdUnitKeywordResponse;
-import com.imooc.ad.response.AdUnitResponse;
+import com.imooc.ad.request.*;
+import com.imooc.ad.response.*;
 
 /**
  * @author spin
@@ -24,4 +18,5 @@ public interface IAdUnitService {
 
     AdUnitDistrictResponse createUnitDistrict(AdUnitDistrictRequest request) throws AdException;
 
+    CreativeUnitResponse createAdCreatveUnit(CreativeUnitRequest request) throws AdException;
 }

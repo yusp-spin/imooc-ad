@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2021/4/1613:30
  * @description: TODO
  */
-public interface CreativeRepository extends JpaRepository<AdCreative,Long> {
+public interface AdCreativeRepository extends JpaRepository<AdCreative,Long> {
 
 }

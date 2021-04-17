@@ -15,5 +15,5 @@ public interface AdUserRepository extends JpaRepository<AdUser,Long> {
  　　* @author yusp
  　　* @date 2021/4/16 13:13
  　　*/
-    AdUser findByUsername(String username);
+    AdUser findByUserName(String username);
 }
