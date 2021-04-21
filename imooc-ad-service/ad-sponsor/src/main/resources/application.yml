@@ -14,7 +14,7 @@ spring:
       hibernate.format_sql: true #是否对 SQL 语句进行格式化
     open-in-view: false #在懒加载的时候，如果找不到一些 bean 的配置会导致错误，所以设置为 false
   datasource:
-    url: jdbc:mysql://192.168.13.128:3306/imooc_ad_data?autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/imooc_ad_data?autoReconnect=true
     username: root
     password: 123456
     tomcat:

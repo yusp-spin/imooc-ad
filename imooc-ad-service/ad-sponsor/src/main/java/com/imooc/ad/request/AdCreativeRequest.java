@@ -2,6 +2,7 @@ package com.imooc.ad.request;
 
 import com.imooc.ad.constant.CommonStatus;
 import com.imooc.ad.entity.AdCreative;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "AdCreativeRequest", description = "创意相关请求接口")
 public class AdCreativeRequest {
 
     private String name;

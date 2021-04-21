@@ -35,8 +35,8 @@ public class UserOPController {
 
 
     @PostMapping("/create")
-    @ApiOperation(value = "新增用户", notes = "create")
-    @ApiImplicitParam(paramType="create", name = "request", value = "用户新增请求", required = true, dataType = "com.imooc.ad.request.AdCreateUserRequest")
+    @ApiOperation(value = "新增用户", notes = "createUser",produces="application/json")
+    @ApiImplicitParam(paramType="query", name = "userName", value = "用户名", required = true, dataType = "String")
     public Result<AdCreateUserResponse> createUser(@RequestBody AdCreateUserRequest request) throws AdException {
         log.info("ad-sponsor: createUser -> {}", JSON.toJSONString(request));
         AdCreateUserResponse user = userService.createUser(request);

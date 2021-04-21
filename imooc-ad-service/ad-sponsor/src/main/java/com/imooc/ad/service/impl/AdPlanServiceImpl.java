@@ -56,12 +56,11 @@ public class AdPlanServiceImpl implements IAdPlanService {
         if(oldPlan != null) {
             throw new AdException(Constants.ErrorMsg.SAME_NAME_PLAN_ERROR);
         }
-        AdPlan adPlan = new AdPlan(){{
-           setUserId(request.getUserId());
-           setPlanName(request.getPlanName());
-           setStartDate(CommonUtils.parseStringDate(request.getStartDate()));
-           setEndDate(CommonUtils.parseStringDate(request.getEndDate()));
-        }};
+        AdPlan adPlan = new AdPlan();
+        adPlan.setUserId(request.getUserId());
+        adPlan.setPlanName(request.getPlanName());
+        adPlan.setStartDate(CommonUtils.parseStringDate(request.getStartDate()));
+        adPlan.setEndDate(CommonUtils.parseStringDate(request.getEndDate()));
         adPlanRepository.save(adPlan);
         return new AdPlanResponse(adPlan.getId(),adPlan.getPlanName());
     }
@@ -76,7 +75,7 @@ public class AdPlanServiceImpl implements IAdPlanService {
         if(!request.validate()) {
             throw new AdException(Constants.ErrorMsg.REQUEST_PARAM_ERROR);
         }
-        return adPlanRepository.findAllByIdAndUserId(request.getIds(),request.getUserId());
+        return adPlanRepository.findAllByIdInAndUserId(request.getIds(),request.getUserId());
     }
 
     /**

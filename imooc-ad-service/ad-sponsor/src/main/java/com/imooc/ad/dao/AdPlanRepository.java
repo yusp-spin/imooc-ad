@@ -25,7 +25,7 @@ public interface AdPlanRepository extends JpaRepository<AdPlan,Long> {
  　　* @author yusp
  　　* @date 2021/4/16 13:22
  　　*/
-    List<AdPlan> findAllByIdAndUserId(List<Long> ids, Long userId);
+    List<AdPlan> findAllByIdInAndUserId(List<Long> ids, Long userId);
 
      /**
  　　* @description: TODO 根据用户ID和推广计划名查询推广计划
