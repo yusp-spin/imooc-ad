@@ -1,4 +1,4 @@
-package com.imooc.ad.config;
+package com.imooc.ad.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
