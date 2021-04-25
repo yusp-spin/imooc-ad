@@ -11,13 +11,15 @@ import com.imooc.ad.Index.adunit.AdUnitIndex;
 import com.imooc.ad.Index.adunit.AdUnitObject;
 import com.imooc.ad.Index.creativeunit.CreativeUnitIndex;
 import com.imooc.ad.Index.creativeunit.CreativeUnitObject;
-import com.imooc.ad.common.table.AdCreativeTable;
-import com.imooc.ad.common.table.AdPlanTable;
-import com.imooc.ad.common.table.AdUnitTable;
-import com.imooc.ad.common.table.CreativeUnitTable;
+import com.imooc.ad.Index.district.UnitDistrictIndex;
+import com.imooc.ad.common.table.*;
 import com.imooc.ad.mysql.constant.OpType;
 import com.imooc.ad.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author spin
@@ -144,4 +146,64 @@ public class AdLevelDataHandler {
         );
     }
 
+    public static void handleLevel4(UnitDistrictTable unitDistrictTable, OpType type) {
+        if(type == OpType.UPDATE) {
+            log.error("district index can not support update");
+            return;
+        }
+        AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(unitDistrictTable.getUnitId());
+        if(unitObject == null) {
+            log.error("UnitDistrictTable index error:{}",unitDistrictTable.getUnitId());
+            return;
+        }
+        String key = CommonUtils.stringConcat(
+                unitDistrictTable.getProvince(),
+                unitDistrictTable.getCity()
+        );
+        Set<Long> value = new HashSet<>(Collections.singleton(unitDistrictTable.getUnitId()));
+        handleBinlogEvent(
+                DataTable.of(UnitDistrictIndex.class),
+                key,
+                value,
+                type
+        );
+    }
+
+    public static void handleLevel4(UnitItTable unitItTable, OpType type) {
+        if(type == OpType.UPDATE) {
+            log.error("it index can not support update");
+            return;
+        }
+        AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(unitItTable.getUnitId());
+        if(unitObject == null) {
+            log.error("UnitItTable index error:{}",unitItTable.getUnitId());
+            return;
+        }
+        Set<Long> value = new HashSet<>(Collections.singleton(unitItTable.getUnitId()));
+        handleBinlogEvent(
+                DataTable.of(UnitDistrictIndex.class),
+                unitItTable.getItTag(),
+                value,
+                type
+        );
+    }
+
+    public static void handleLevel4(UnitKeywordTable unitKeywordTable, OpType type) {
+        if(type == OpType.UPDATE) {
+            log.error("keyword index can not support update");
+            return;
+        }
+        AdUnitObject unitObject = DataTable.of(AdUnitIndex.class).get(unitKeywordTable.getUnitId());
+        if(unitObject == null) {
+            log.error("UnitKeywordTable index error:{}",unitKeywordTable.getUnitId());
+            return;
+        }
+        Set<Long> value = new HashSet<>(Collections.singleton(unitKeywordTable.getUnitId()));
+        handleBinlogEvent(
+                DataTable.of(UnitDistrictIndex.class),
+                unitKeywordTable.getKeyword(),
+                value,
+                type
+        );
+    }
 }
